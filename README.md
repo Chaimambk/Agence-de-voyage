@@ -12,4 +12,4 @@ Bienvenue sur le projet "Voyage au Japon", une plateforme web interactive permet
 - Déconnexion sécurisée
 
 
-Dans un premier temps, nous avons configuré une base de données qui est dans le fichier suivant: database.php
+Dans un premier temps, nous avons configuré une base de données qui est dans le fichier suivant: 
