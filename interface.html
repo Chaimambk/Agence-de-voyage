@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agence de Voyage Japon</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: rgba(16, 170, 101, 0.71);
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    nav ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .hero {
+      text-align: center;
+      padding: 50px;
+      background: url('japan.jpg') no-repeat center center/cover;
+      color: white;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 20px;
+      background: #086a05;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+    .voyages {
+      text-align: center;
+      padding: 50px;
+      background: white;
+    }
+    .voyage-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .voyage-item {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 250px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <nav>
+    <h1>Voyages au Japon</h1>
+    <ul>
+      <li><a href="#">Accueil</a></li>
+      <li><a href="#voyages">Voyages</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Partez à la découverte du Japon</h2>
+  <p>Explorez les plus belles destinations du Japon avec nos offres exclusives.</p>
+  <a href="#voyages" class="btn">Voir les voyages</a>
+</section>
+
+<section id="voyages" class="voyages">
+  <h2>Nos Offres</h2>
+  <div class="voyage-container" id="voyage-list">
+    <div class="voyage-item">
+      <h3>Tokyo</h3>
+      <p>Découvrez la capitale vibrante du Japon.</p>
+    </div>
+    <div class="voyage-item">
+      <h3>Kyoto</h3>
+      <p>Explorez les temples et jardins traditionnels.</p>
+    </div>
+    <div class="voyage-item">
+      <h3>Osaka</h3>
+      <p>Profitez de la cuisine et de la culture animée.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Agence de Voyage Japon - Tous droits réservés.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+
