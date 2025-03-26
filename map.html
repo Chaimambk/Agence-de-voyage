@@ -11,109 +11,78 @@
     <style>
         /* Styles généraux */
         body {
+            margin: 0;
             font-family: 'Arial', sans-serif;
-            text-align: center;
-        }
-
-        #map-container {
-            display: none; /* Caché au départ */
-            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
         }
 
         #map {
-            width: 90%;
-            height: 500px;
-            margin: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Style du bouton */
-        #showMapBtn {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        #showMapBtn:hover {
-            background-color: #e63939;
+            width: 100%;
+            height: 100vh; /* Carte prend toute la hauteur de l'écran */
         }
     </style>
 </head>
 <body>
 
-<h1>Voyage au Japon 🇯🇵</h1>
-<p>Découvrez les plus belles destinations et hôtels !</p>
-
-<!-- Bouton pour afficher la carte -->
-<button id="showMapBtn">🌍 Afficher la carte interactive</button>
-
 <!-- Conteneur de la carte -->
-<div id="map-container">
-    <h2>Carte des villes et hôtels</h2>
-    <div id="map"></div>
-</div>
+<div id="map"></div>
 
 <!-- MapLibre GL JS -->
 <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
 
 <script>
-    document.getElementById('showMapBtn').addEventListener('click', function() {
-        document.getElementById('map-container').style.display = 'block';
+    // Initialisation de la carte avec MapLibre
+    var map = new maplibregl.Map({
+        container: 'map',
+        style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json', // 🌍 Carte moderne haute qualité
+        center: [138.2529, 36.2048], // Centre du Japon
+        zoom: 5
+    });
 
-        // Initialisation de la carte avec MapLibre
-        var map = new maplibregl.Map({
-            container: 'map',
-            style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json', // 🌍 Carte moderne haute qualité
-            center: [138.2529, 36.2048], // Centre du Japon
-            zoom: 5
+    // Ajout des contrôles de zoom
+    map.addControl(new maplibregl.NavigationControl());
+
+    // Chemin des icônes personnalisées
+    const villeIcon = 'https://img.icons8.com/emoji/48/tokyo-tower-emoji.png';  // Icône pour les villes
+    const hotelIcon = 'https://img.icons8.com/emoji/48/hotel-emoji.png';  // Icône pour les hôtels
+
+    // Charger les villes depuis un fichier PHP (qui renvoie des données JSON)
+    fetch('get_villes.php')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(ville => {
+                new maplibregl.Marker({ element: createCustomMarker(villeIcon) })
+                    .setLngLat([ville.longitude, ville.latitude])
+                    .setPopup(new maplibregl.Popup().setHTML(`<b>${ville.nom}</b><br>${ville.description}`))
+                    .addTo(map);
+            });
         });
 
-        // Ajout des contrôles de zoom
-        map.addControl(new maplibregl.NavigationControl());
-
-        // Icônes personnalisées
-        const villeIcon = 'https://img.icons8.com/emoji/48/tokyo-tower-emoji.png';  // Icône pour les villes
-        const hotelIcon = 'https://img.icons8.com/emoji/48/hotel-emoji.png';  // Icône pour les hôtels
-
-        // Charger les villes
-        fetch('get_villes.php')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(ville => {
-                    new maplibregl.Marker({ element: createCustomMarker(villeIcon) })
-                        .setLngLat([ville.longitude, ville.latitude])
-                        .setPopup(new maplibregl.Popup().setHTML(`<b>${ville.nom}</b><br>${ville.description}`))
-                        .addTo(map);
-                });
+    // Charger les hôtels
+    fetch('get_hotels.php')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(hotel => {
+                new maplibregl.Marker({ element: createCustomMarker(hotelIcon) })
+                    .setLngLat([hotel.longitude, hotel.latitude])
+                    .setPopup(new maplibregl.Popup().setHTML(`<b>${hotel.nom}</b><br>${hotel.description}`))
+                    .addTo(map);
             });
+        });
 
-        // Charger les hôtels
-        fetch('get_hotels.php')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(hotel => {
-                    new maplibregl.Marker({ element: createCustomMarker(hotelIcon) })
-                        .setLngLat([hotel.longitude, hotel.latitude])
-                        .setPopup(new maplibregl.Popup().setHTML(`<b>${hotel.nom}</b><br>${hotel.description}`))
-                        .addTo(map);
-                });
-            });
-
-        // Fonction pour créer un marqueur personnalisé
-        function createCustomMarker(iconURL) {
-            let marker = document.createElement('div');
-            marker.style.backgroundImage = `url(${iconURL})`;
-            marker.style.width = '32px';
-            marker.style.height = '32px';
-            marker.style.backgroundSize = 'cover';
-            return marker;
-        }
-    });
+    // Fonction pour créer un marqueur personnalisé
+    function createCustomMarker(iconURL) {
+        let marker = document.createElement('div');
+        marker.style.backgroundImage = `url(${iconURL})`;
+        marker.style.width = '32px';
+        marker.style.height = '32px';
+        marker.style.backgroundSize = 'cover';
+        return marker;
+    }
 </script>
 
 </body>
