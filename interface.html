@@ -3,118 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agence de Voyage Japon</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Voyage au Japon</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
     }
-    header {
-      background: rgba(16, 170, 101, 0.71);
-      color: white;
-      padding: 20px 0;
-      text-align: center;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-    }
-    nav ul li {
-      display: inline;
-      margin: 0 15px;
-    }
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .hero {
-      text-align: center;
-      padding: 50px;
-      background: url('japan.jpg') no-repeat center center/cover;
-      color: white;
-    }
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      margin-top: 20px;
-      background: #086a05;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 18px;
-    }
-    .voyages {
-      text-align: center;
-      padding: 50px;
-      background: white;
-    }
-    .voyage-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .voyage-item {
-      background: #fff;
-      padding: 20px;
+    .swiper-slide img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 250px;
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #222;
-      color: white;
+    #map-container {
+      display: none;
+      width: 100%;
+      height: 500px;
+      margin-top: 20px;
     }
   </style>
 </head>
-<body>
-<header>
-  <nav>
-    <h1>Voyages au Japon</h1>
-    <ul>
-      <li><a href="#">Accueil</a></li>
-      <li><a href="#voyages">Voyages</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<body class="bg-gray-900 text-white">
+
+<!-- Navbar -->
+<nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 p-4 flex justify-between items-center z-50">
+  <h1 class="text-xl font-bold">Voyage Japon</h1>
+  <ul class="flex gap-6">
+    <li><a href="#" class="hover:text-red-500">Accueil</a></li>
+    <li><a href="villes.html" class="hover:text-red-500">Villes</a></li>
+    <li><a href="hotels.html" class="hover:text-red-500">Hôtels</a></li>
+    <li><a href="reservation.html" class="hover:text-red-500">Réservation</a></li>
+    <li><button class="hover:text-red-500" onclick="toggleMap(event)">Carte</button></li>
+    <li><a href="auth.php" onclick="toggleAuthModal()">Connexion</a></li> <!-- Bouton connexion -->
+  </ul>
+</nav>
+
+<!-- Conteneur de la carte -->
+<div id="map-container" class="w-full" style="display: none; margin-top: 64px; height: calc(100vh - 64px);">
+  <iframe src="map.html" width="100%" height="100%" style="border: none;"></iframe>
+</div>
+
+<script>
+  // Fonction toggleMap avec prevention de comportement par défaut
+  function toggleMap(event) {
+    event.preventDefault(); // Empêche la redirection vers l'ancre #
+
+    const mapContainer = document.getElementById("map-container");
+
+    // Si la carte est cachée, on l'affiche, sinon on la cache
+    if (mapContainer.style.display === "none" || mapContainer.style.display === "") {
+      mapContainer.style.display = "block";
+    } else {
+      mapContainer.style.display = "none";
+    }
+  }
+
+  // Animation GSAP
+  gsap.from("h1", { opacity: 0, y: -50, duration: 1, ease: "power2.out" });
+  gsap.from("nav", { opacity: 0, y: -50, duration: 1, delay: 0.5 });
+
+  // Configuration du Swiper (carrousel d'images)
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    autoplay: { delay: 3000 },
+    slidesPerView: 1,
+    breakpoints: {
+      640: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 }
+    }
+  });
+
+  // Cacher la carte si on clique sur un autre lien du menu
+  document.querySelectorAll("nav ul li a").forEach(link => {
+    link.addEventListener("click", function() {
+      document.getElementById("map-container").style.display = "none";
+    });
+  });
+
+  // Fonction pour afficher/masquer la fenêtre modale de connexion
+  function toggleAuthModal() {
+    document.getElementById("auth-modal").classList.toggle("hidden");
+  }
+</script>
+
+<!-- Hero Section avec Vidéo -->
+<header class="relative h-screen flex items-center justify-center">
+  <video autoplay loop muted class="absolute w-full h-full object-cover">
+    <source src="japan-video.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+  <h1 class="text-5xl font-bold z-10 text-center">Explorez le Japon 🇯🇵</h1>
 </header>
 
-<section class="hero">
-  <h2>Partez à la découverte du Japon</h2>
-  <p>Explorez les plus belles destinations du Japon avec nos offres exclusives.</p>
-  <a href="#voyages" class="btn">Voir les voyages</a>
-</section>
-
-<section id="voyages" class="voyages">
-  <h2>Nos Offres</h2>
-  <div class="voyage-container" id="voyage-list">
-    <div class="voyage-item">
-      <h3>Tokyo</h3>
-      <p>Découvrez la capitale vibrante du Japon.</p>
-    </div>
-    <div class="voyage-item">
-      <h3>Kyoto</h3>
-      <p>Explorez les temples et jardins traditionnels.</p>
-    </div>
-    <div class="voyage-item">
-      <h3>Osaka</h3>
-      <p>Profitez de la cuisine et de la culture animée.</p>
+<!-- Section Villes Populaires -->
+<section class="p-10">
+  <h2 class="text-3xl mb-6 text-center">🌟 Nos Destinations Populaires</h2>
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="tokyo.jpg" alt="Tokyo"></div>
+      <div class="swiper-slide"><img src="kyoto.jpg" alt="Kyoto"></div>
+      <div class="swiper-slide"><img src="osaka.jpg" alt="Osaka"></div>
     </div>
   </div>
 </section>
 
-<footer>
-  <p>&copy; 2025 Agence de Voyage Japon - Tous droits réservés.</p>
+<!-- Footer -->
+<footer class="bg-black p-6 text-center">
+  <p>© 2025 Voyage Japon. Tous droits réservés.</p>
 </footer>
 
-<script src="script.js"></script>
+<?php include 'auth.php'; ?>
+
 </body>
 </html>
-
