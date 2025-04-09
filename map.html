@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carte Interactive - Agence de Voyage</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carte Interactive - Agence de Voyage</title>
 
-    <!-- MapLibre GL CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" />
+  <!-- MapLibre GL CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" />
 
-    <style>
-        /* Styles généraux */
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
+  <style>
+    /* Styles généraux */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
 
-        #map {
-            width: 100%;
-            height: 100vh; /* Carte prend toute la hauteur de l'écran */
-        }
-    </style>
+    #map {
+      width: 100%;
+      height: 100vh; /* Carte prend toute la hauteur de l'écran */
+    }
+  </style>
 </head>
 <body>
 
@@ -35,54 +35,62 @@
 <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
 
 <script>
-    // Initialisation de la carte avec MapLibre
-    var map = new maplibregl.Map({
-        container: 'map',
-        style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json', // 🌍 Carte moderne haute qualité
-        center: [138.2529, 36.2048], // Centre du Japon
-        zoom: 5
-    });
+  // Initialisation de la carte avec MapLibre
+  var map = new maplibregl.Map({
+    container: 'map',
+    style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json', // 🌍 Carte moderne haute qualité
+    center: [138.2529, 36.2048], // Centre du Japon
+    zoom: 5
+  });
 
-    // Ajout des contrôles de zoom
-    map.addControl(new maplibregl.NavigationControl());
+  // Ajout des contrôles de zoom
+  map.addControl(new maplibregl.NavigationControl());
 
-    // Chemin des icônes personnalisées
-    const villeIcon = 'https://img.icons8.com/emoji/48/tokyo-tower-emoji.png';  // Icône pour les villes
-    const hotelIcon = 'https://img.icons8.com/emoji/48/hotel-emoji.png';  // Icône pour les hôtels
+  // Chemin des icônes personnalisées
+  const villeIcon = 'https://img.icons8.com/emoji/48/tokyo-tower-emoji.png';  // Icône pour les villes
+  const hotelIcon = 'https://img.icons8.com/emoji/48/marker-emoji.png';  // Icône épinglée
 
-    // Charger les villes depuis un fichier PHP (qui renvoie des données JSON)
-    fetch('get_villes.php')
-        .then(response => response.json())
-        .then(data => {
+
+  // Charger les villes depuis un fichier PHP (qui renvoie des données JSON)
+  fetch('get_villes.php')
+          .then(response => response.json())
+          .then(data => {
             data.forEach(ville => {
-                new maplibregl.Marker({ element: createCustomMarker(villeIcon) })
-                    .setLngLat([ville.longitude, ville.latitude])
-                    .setPopup(new maplibregl.Popup().setHTML(`<b>${ville.nom}</b><br>${ville.description}`))
-                    .addTo(map);
+              new maplibregl.Marker({ element: createCustomMarker(villeIcon) })
+                      .setLngLat([ville.longitude, ville.latitude])
+                      .setPopup(new maplibregl.Popup().setHTML(`<b>${ville.nom}</b><br>${ville.description}`))
+                      .addTo(map);
             });
-        });
+          });
 
-    // Charger les hôtels
-    fetch('get_hotels.php')
-        .then(response => response.json())
-        .then(data => {
+  // Charger les hôtels
+  fetch('get_hotels.php')
+          .then(response => response.json())
+          .then(data => {
             data.forEach(hotel => {
-                new maplibregl.Marker({ element: createCustomMarker(hotelIcon) })
-                    .setLngLat([hotel.longitude, hotel.latitude])
-                    .setPopup(new maplibregl.Popup().setHTML(`<b>${hotel.nom}</b><br>${hotel.description}`))
-                    .addTo(map);
+              new maplibregl.Marker({ element: createCustomMarker(hotelIcon) })
+                      .setLngLat([hotel.longitude, hotel.latitude])
+                      .setPopup(new maplibregl.Popup().setHTML(`<b>${hotel.nom}</b><br>${hotel.description}`))
+                      .addTo(map);
             });
-        });
+          });
 
-    // Fonction pour créer un marqueur personnalisé
-    function createCustomMarker(iconURL) {
-        let marker = document.createElement('div');
-        marker.style.backgroundImage = `url(${iconURL})`;
-        marker.style.width = '32px';
-        marker.style.height = '32px';
-        marker.style.backgroundSize = 'cover';
-        return marker;
-    }
+  // Fonction pour créer un marqueur personnalisé
+  function createCustomMarker(iconURL) {
+    let marker = document.createElement('div');
+    marker.style.width = '24px';  // Taille de l'emoji
+    marker.style.height = '24px';  // Taille de l'emoji
+    marker.style.display = 'flex';
+    marker.style.alignItems = 'center';
+    marker.style.justifyContent = 'center';
+    marker.style.fontSize = '24px';  // Taille de l'emoji
+    marker.style.background = 'transparent';  // Pas de fond
+    marker.style.border = 'none';  // Pas de bordure
+    marker.style.boxShadow = 'none';  // Pas d'ombre
+    marker.innerHTML = '📍';  // Emoji 📍 pour la position
+    return marker;
+  }
+
 </script>
 
 </body>
