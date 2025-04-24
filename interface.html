@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Voyage au Japon</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <style>
     .overlay {
       position: absolute;
       inset: 0;
       background: rgba(0, 0, 0, 0.6);
-    }
-    .swiper-slide img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 10px;
     }
     #map-container {
       display: none;
@@ -39,75 +33,49 @@
     <li><a href="hotels.html" class="hover:text-red-500">Hôtels</a></li>
     <li><a href="reservation.html" class="hover:text-red-500">Réservation</a></li>
     <li><button class="hover:text-red-500" onclick="toggleMap(event)">Carte</button></li>
-    <li><a href="auth.php" class="hover:text-red-500" onclick="toggleAuthModal()">Connexion</a></li> <!-- Bouton connexion -->
+    <li><a href="auth.php" class="hover:text-red-500" onclick="toggleAuthModal()">Connexion</a></li>
   </ul>
 </nav>
 
-<!-- Conteneur de la carte -->
+<!-- Carte -->
 <div id="map-container" class="w-full" style="display: none; margin-top: 64px; height: calc(100vh - 64px);">
   <iframe src="map.html" width="100%" height="100%" style="border: none;"></iframe>
 </div>
 
-<script>
-  // Fonction toggleMap avec prevention de comportement par défaut
-  function toggleMap(event) {
-    event.preventDefault(); // Empêche la redirection vers l'ancre #
-
-    const mapContainer = document.getElementById("map-container");
-
-    // Si la carte est cachée, on l'affiche, sinon on la cache
-    if (mapContainer.style.display === "none" || mapContainer.style.display === "") {
-      mapContainer.style.display = "block";
-    } else {
-      mapContainer.style.display = "none";
-    }
-  }
-
-  // Animation GSAP
-  gsap.from("h1", { opacity: 0, y: -50, duration: 1, ease: "power2.out" });
-  gsap.from("nav", { opacity: 0, y: -50, duration: 1, delay: 0.5 });
-
-  // Configuration du Swiper (carrousel d'images)
-  const swiper = new Swiper(".mySwiper", {
-    loop: true,
-    autoplay: { delay: 3000 },
-    slidesPerView: 1,
-    breakpoints: {
-      640: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 }
-    }
-  });
-
-  // Cacher la carte si on clique sur un autre lien du menu
-  document.querySelectorAll("nav ul li a").forEach(link => {
-    link.addEventListener("click", function() {
-      document.getElementById("map-container").style.display = "none";
-    });
-  });
-
-  // Fonction pour afficher/masquer la fenêtre modale de connexion
-  function toggleAuthModal() {
-    document.getElementById("auth-modal").classList.toggle("hidden");
-  }
-</script>
-
-<!-- Hero Section avec Vidéo -->
+<!-- Hero Section -->
 <header class="relative h-screen flex items-center justify-center">
   <video autoplay loop muted class="absolute w-full h-full object-cover">
-    <source src="japan-video.mp4" type="video/mp4">
+    <source src="japan-video.mp4" type="video/mp4" />
   </video>
   <div class="overlay"></div>
   <h1 class="text-5xl font-bold z-10 text-center">Explorez le Japon 🇯🇵</h1>
 </header>
 
-<!-- Section Villes Populaires -->
+<!-- Destinations Populaires -->
 <section class="p-10">
-  <h2 class="text-3xl mb-6 text-center">🌟 Nos Destinations Populaires</h2>
-  <div class="swiper mySwiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="tokyo.jpg" alt="Tokyo"></div>
-      <div class="swiper-slide"><img src="kyoto.jpg" alt="Kyoto"></div>
-      <div class="swiper-slide"><img src="osaka.jpg" alt="Osaka"></div>
+  <h2 class="text-3xl mb-6 text-center">🌏 Nos Destinations Populaires</h2>
+
+  <div class="w-full flex justify-center">
+    <div class="w-96 h-64 rounded-lg overflow-hidden shadow-lg">
+      <div class="swiper mySwiper h-full">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <a href="reservation-tokyo.html">
+              <img src="images/tokyo1.jpg" alt="Tokyo 1" class="w-full h-full object-cover" />
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="reservation-tokyo.html">
+              <img src="images/tokyo2.jpg" alt="Tokyo 2" class="w-full h-full object-cover" />
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="reservation-tokyo.html">
+              <img src="images/tokyo3.jpg" alt="Tokyo 3" class="w-full h-full object-cover" />
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -117,7 +85,47 @@
   <p>© 2025 Voyage Japon. Tous droits réservés.</p>
 </footer>
 
+<!-- Auth Modal -->
 <?php include 'auth.php'; ?>
+
+<script>
+  // Carte toggle
+  function toggleMap(event) {
+    event.preventDefault();
+    const mapContainer = document.getElementById("map-container");
+    mapContainer.style.display = (mapContainer.style.display === "none" || mapContainer.style.display === "") ? "block" : "none";
+  }
+
+  // Cacher la carte si on clique ailleurs
+  document.querySelectorAll("nav ul li a").forEach(link => {
+    link.addEventListener("click", () => {
+      document.getElementById("map-container").style.display = "none";
+    });
+  });
+
+  // Connexion modal toggle
+  function toggleAuthModal() {
+    document.getElementById("auth-modal").classList.toggle("hidden");
+  }
+
+  // Animations GSAP
+  gsap.from("h1", { opacity: 0, y: -50, duration: 1 });
+  gsap.from("nav", { opacity: 0, y: -50, duration: 1, delay: 0.5 });
+
+  // Swiper Config (1 seul slide qui défile)
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    effect: "fade",
+    fadeEffect: {
+      crossFade: true,
+    },
+  });
+</script>
 
 </body>
 </html>
+
