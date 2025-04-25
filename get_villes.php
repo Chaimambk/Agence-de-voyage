@@ -2,6 +2,7 @@
 require 'database.php';
 
 $sql = "SELECT nom, latitude, longitude, description FROM villes";
+
 $stmt = $pdo->query($sql);
 $villes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
