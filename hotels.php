@@ -1,7 +1,7 @@
 <?php
 // Connexion à la base de données
 $host = '127.0.0.1';
-$dbname = 'Prog_Web_Php';
+$dbname = 'projet';
 $user = 'root';
 $pass = 'rootroot';
 
@@ -45,9 +45,18 @@ $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
             width: 90%;
             max-width: 1000px;
             margin: auto;
+            overflow: hidden;
+        }
+
+        .swiper-wrapper {
+            display: flex;
         }
 
         .swiper-slide {
+            flex-shrink: 0;
+            width: 100% !important;
+            height: auto;
+            box-sizing: border-box;
             background: #1f2937;
             border-radius: 1rem;
             padding: 1rem;
@@ -79,7 +88,6 @@ $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="swiper-wrapper">
         <?php foreach ($hotels as $hotel): ?>
             <div class="swiper-slide">
-                <!-- Affichage de l'image de l'hôtel -->
                 <img src="images/<?= htmlspecialchars($hotel['image']) ?>" alt="<?= htmlspecialchars($hotel['nom']) ?>">
                 <div class="hotel-info">
                     <h2><?= htmlspecialchars($hotel['nom']) ?></h2>
@@ -109,3 +117,4 @@ $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </script>
 </body>
 </html>
+
