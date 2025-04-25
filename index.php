@@ -36,7 +36,7 @@
     <ul class="flex gap-6">
         <li><a href="#" class="hover:text-red-500">Accueil</a></li>
         <li><a href="villes.html" class="hover:text-red-500">Villes</a></li>
-        <li><a href="hotels.html" class="hover:text-red-500">Hôtels</a></li>
+        <li><a href="hotels.php" class="hover:text-red-500">Hôtels</a></li>
         <li><a href="reservation.html" class="hover:text-red-500">Réservation</a></li>
         <li><button class="hover:text-red-500" onclick="toggleMap(event)">Carte</button></li>
     </ul>
