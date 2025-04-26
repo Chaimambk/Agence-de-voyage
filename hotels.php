@@ -1,12 +1,7 @@
 <?php
-// Connexion à la base de données
-$host = '127.0.0.1';
-$dbname = 'projet';
-$user = 'root';
-$pass = 'rootroot';
-
+require 'config.php';
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
+    $pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'] . ";charset=utf8", $_ENV['DB_USER'], $_ENV['DB_PASS']);
 } catch (PDOException $e) {
     die("Erreur de connexion : " . $e->getMessage());
 }
@@ -82,6 +77,7 @@ $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
+
 <h1>Nos Hôtels au Japon 🇯🇵</h1>
 
 <div class="swiper">
@@ -117,4 +113,3 @@ $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </script>
 </body>
 </html>
-
