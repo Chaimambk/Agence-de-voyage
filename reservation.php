@@ -10,7 +10,7 @@ try {
     die('Erreur de connexion : ' . $e->getMessage());
 }
 
-// Récupération de toutes les villes (ATTENTION : table "villes" et pas "ville")
+// Récupération de toutes les villes
 $villes = $pdo->query('SELECT id, nom FROM villes')->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -47,7 +47,7 @@ $villes = $pdo->query('SELECT id, nom FROM villes')->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="w-full flex justify-center">
         <div class="w-full max-w-4xl bg-gray-800 rounded-lg shadow-lg p-8">
-            <form action="submit-reservation.php" method="POST">
+            <form action="traitement_reservation.php" method="POST">
                 <!-- Ville -->
                 <div class="mb-6">
                     <label for="city" class="block text-lg font-medium mb-2">Choisissez une Ville :</label>
@@ -92,7 +92,6 @@ $villes = $pdo->query('SELECT id, nom FROM villes')->fetchAll(PDO::FETCH_ASSOC);
                         Réserver
                     </button>
                 </div>
-
             </form>
         </div>
     </div>
