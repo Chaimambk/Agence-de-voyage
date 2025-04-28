@@ -37,7 +37,7 @@ $villes = $pdo->query('SELECT id, nom FROM villes')->fetchAll(PDO::FETCH_ASSOC);
         <li><a href="hotels.php" class="hover:text-red-200">Hôtels</a></li>
         <li><a href="reservation.php" class="hover:text-red-200">Réservation</a></li>
         <li><button class="hover:text-red-200" onclick="toggleMap()">Carte</button></li>
-        <li><a href="auth.php" class="hover:text-red-200" onclick="toggleAuthModal()">Connexion</a></li>
+        <li><a href="authentification.php" class="hover:text-red-200" onclick="toggleAuthModal()">Connexion</a></li>
     </ul>
 </nav>
 

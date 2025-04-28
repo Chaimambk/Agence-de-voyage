@@ -14,4 +14,3 @@ try {
     die("Erreur de connexion : " . $e->getMessage());
 }
 ?>
-// "mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password
