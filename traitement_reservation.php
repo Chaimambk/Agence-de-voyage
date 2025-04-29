@@ -3,12 +3,12 @@
 session_start();
 
 // Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['utilisateur_id'])) {
+if (!isset($_SESSION['id'])) {
     die('Erreur : Utilisateur non connecté.');
 }
 
 // Récupérer l'ID de l'utilisateur connecté
-$utilisateurId = $_SESSION['utilisateur_id'];
+$utilisateurId = $_SESSION['id'];
 
 // Connexion à la base de données
 require 'config.php';

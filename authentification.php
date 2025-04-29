@@ -15,9 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user["mot_de_passe"])) {
-            $_SESSION["user_id"] = $user["id"];
+            $_SESSION["id"] = $user["id"];
             $_SESSION["user_name"] = $user["nom"];
-            header("Location: dashboard.php");
+            header("Location: index.php");
             exit();
         } else {
             $message = "❌ Email ou mot de passe incorrect.";
