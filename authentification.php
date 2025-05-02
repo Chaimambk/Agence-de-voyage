@@ -174,12 +174,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 p-4 flex justify-between items-center z-50">
     <h1 class="text-xl font-bold">Voyage Japon</h1>
     <ul class="flex gap-6">
-        <li><a href="#" class="hover:text-red-200">Accueil</a></li>
-        <li><a href="villes.html" class="hover:text-red-200">Villes</a></li>
-        <li><a href="hotels.php" class="hover:text-red-200">Hôtels</a></li>
-        <li><a href="reservation.php" class="hover:text-red-200">Réservation</a></li>
-        <li><button class="hover:text-red-200" onclick="toggleMap(event)">Carte</button></li>
-        <li><a href="authentification.php" class="hover:text-red-200" onclick="toggleAuthModal()">Connexion</a></li>
+        <li><a href="#" class="hover:text-pink-200">Accueil</a></li>
+        <li><a href="villes.html" class="hover:text-pink-200">Villes</a></li>
+        <li><a href="hotels.php" class="hover:text-pink-200">Hôtels</a></li>
+        <li><a href="reservation.php" class="hover:text-pink-200">Réservation</a></li>
+        <li><button class="hover:text-pink-200" onclick="toggleMap(event)">Carte</button></li>
+        <li><a href="authentification.php" class="hover:text-pink-200">Connexion</a></li>
     </ul>
 </nav>
 
@@ -226,61 +226,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 
+<!-- Carte -->
+<div id="map-container" class="w-full" style="display: none; margin-top: 64px; height: calc(100vh - 64px);">
+    <iframe src="map.html" width="100%" height="100%" style="border: none;"></iframe>
+</div>
+
 <script>
-    function switchForms(event) {
+    function toggleMap(event) {
         event.preventDefault();
-        const loginForm = document.getElementById("loginForm");
-        const registerForm = document.getElementById("registerForm");
-        const formTitle = document.getElementById("formTitle");
-        const switchContainer = document.getElementById("switchContainer");
-
-        if (loginForm.classList.contains("hidden")) {
-            loginForm.classList.remove("hidden");
-            registerForm.classList.add("hidden");
-            loginForm.classList.add("fade-in");
-            formTitle.innerHTML = "Connexion";
-            formTitle.classList.add("fade-in");
-            switchContainer.innerHTML = 'Pas encore inscrit ? <span id="toggleForm" class="switch-form">Créer un compte</span>';
-        } else {
-            loginForm.classList.add("hidden");
-            registerForm.classList.remove("hidden");
-            registerForm.classList.add("fade-in");
-            formTitle.innerHTML = 'Inscription<br><span class="text-sm text-gray-400">Rejoins-nous 🌍</span>';
-            formTitle.classList.add("fade-in");
-            switchContainer.innerHTML = 'Déjà un compte ? <span id="toggleForm" class="switch-form">Se connecter</span>';
-        }
-        document.getElementById("toggleForm").addEventListener("click", switchForms);
-    }
-
-    // Premier attachement
-    document.getElementById("toggleForm").addEventListener("click", switchForms);
-
-    // Fonction pour afficher/masquer la carte
-    function toggleMap() {
         const mapContainer = document.getElementById("map-container");
-        const reservationSection = document.getElementById("reservation-section");
-
-        // Si la carte est cachée, on l'affiche, sinon on la cache
-        if (mapContainer.style.display === "none" || mapContainer.style.display === "") {
-            mapContainer.style.display = "block"; // Afficher la carte
-            reservationSection.style.display = "none"; // Masquer le formulaire
-        } else {
-            mapContainer.style.display = "none"; // Masquer la carte
-            reservationSection.style.display = "block"; // Afficher le formulaire
-        }
+        mapContainer.style.display = (mapContainer.style.display === "none" || mapContainer.style.display === "") ? "block" : "none";
     }
+
+    // Cacher la carte si on clique ailleurs
+    document.querySelectorAll("nav ul li a").forEach(link => {
+        link.addEventListener("click", () => {
+            document.getElementById("map-container").style.display = "none";
+        });
+    });
 
     // Connexion modal toggle
     function toggleAuthModal() {
         document.getElementById("auth-modal").classList.toggle("hidden");
     }
-</script>
 
-<!-- Carte -->
-<div id="map-container" class="w-full" style="display: none; margin-top: 64px; height: calc(100vh - 64px);">
-    <button onclick="toggleMap()" class="bg-pink-200 text-white p-4 rounded-lg absolute top-4 right-4 z-50">Fermer la carte</button>
-    <iframe src="map.html" width="100%" height="100%" style="border: none;"></iframe>
-</div>
 </script>
 
 </body>

@@ -32,13 +32,19 @@ $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 p-4 flex justify-between items-center z-50">
     <h1 class="text-xl font-bold">Voyage Japon</h1>
     <ul class="flex gap-6">
-        <li><a href="interface.html" class="hover:text-red-200">Accueil</a></li>
-        <li><a href="villes.html" class="hover:text-red-200">Villes</a></li>
-        <li><a href="hotels.php" class="hover:text-red-200">Hôtels</a></li>
-        <li><a href="reservation.php" class="hover:text-red-200">Réservation</a></li>
-        <li><a href="authentification.php" class="hover:text-red-200">Connexion</a></li>
+        <li><a href="interface.html" class="hover:text-pink-200">Accueil</a></li>
+        <li><a href="villes.html" class="hover:text-pink-200">Villes</a></li>
+        <li><a href="hotels.php" class="hover:text-pink-200">Hôtels</a></li>
+        <li><a href="reservation.php" class="hover:text-pink-200">Réservation</a></li>
+        <li><button class="hover:text-pink-200" onclick="toggleMap(event)">Carte</button></li>
+        <li><a href="authentification.php" class="hover:text-pink-200">Connexion</a></li>
     </ul>
 </nav>
+
+<!-- Carte -->
+<div id="map-container" class="w-full" style="display: none; margin-top: 64px; height: calc(100vh - 64px);">
+    <iframe src="map.html" width="100%" height="100%" style="border: none;"></iframe>
+</div>
 
 <!-- Titre principal -->
 <h1 class="text-3xl text-center mt-32 mb-10 font-bold">Nos Hôtels au Japon 🇯🇵</h1>
@@ -82,6 +88,25 @@ $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- Swiper JS Config -->
 <script>
+
+    function toggleMap(event) {
+        event.preventDefault();
+        const mapContainer = document.getElementById("map-container");
+        mapContainer.style.display = (mapContainer.style.display === "none" || mapContainer.style.display === "") ? "block" : "none";
+    }
+
+    // Cacher la carte si on clique ailleurs
+    document.querySelectorAll("nav ul li a").forEach(link => {
+        link.addEventListener("click", () => {
+            document.getElementById("map-container").style.display = "none";
+        });
+    });
+
+    // Connexion modal toggle
+    function toggleAuthModal() {
+        document.getElementById("auth-modal").classList.toggle("hidden");
+    }
+
     const swiper = new Swiper('.mySwiper', {
         slidesPerView: 1,
         spaceBetween: 30,

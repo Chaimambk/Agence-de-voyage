@@ -37,14 +37,14 @@ if (!isset($_SESSION["user_id"])) {
 <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 p-4 flex justify-between items-center z-50">
     <h1 class="text-xl font-bold">Voyage Japon</h1>
     <ul class="flex gap-6">
-        <li><a href="#" class="hover:text-red-200">Accueil</a></li>
-        <li><a href="villes.html" class="hover:text-red-200">Villes</a></li>
-        <li><a href="hotels.php" class="hover:text-red-200">Hôtels</a></li>
-        <li><a href="reservation.php" class="hover:text-red-200">Réservation</a></li>
-        <li><button class="hover:text-red-200" onclick="toggleMap(event)">Carte</button></li>
+        <li><a href="#" class="hover:text-pink-200">Accueil</a></li>
+        <li><a href="villes.html" class="hover:text-pink-200">Villes</a></li>
+        <li><a href="hotels.php" class="hover:text-pink-200">Hôtels</a></li>
+        <li><a href="reservation.php" class="hover:text-pink-200">Réservation</a></li>
+        <li><button class="hover:text-pink-200" onclick="toggleMap(event)">Carte</button></li>
         <!-- Si l'utilisateur est connecté, afficher "Déconnexion" -->
         <?php if (isset($_SESSION["user_id"])): ?>
-            <li><a href="deconnexion.php" class="hover:text-red-200">Déconnexion</a></li>
+            <li><a href="deconnexion.php" class="hover:text-pink-200">Déconnexion</a></li>
         <?php endif; ?>
     </ul>
 </nav>

@@ -47,36 +47,52 @@
   map.addControl(new maplibregl.NavigationControl());
 
   // Chemin des icônes personnalisées
-  const villeIcon = 'https://img.icons8.com/emoji/48/tokyo-tower-emoji.png';  // Icône pour les villes
-  const hotelIcon = 'https://img.icons8.com/emoji/48/marker-emoji.png';  // Icône épinglée
+  const villeIcon = '📍';  // Icône pour les villes (ici, un point classique)
+  const hotelProcheIcon = '📌';  // Icône pour les hôtels à proximité (ici, un épingle)
 
+  let cityMarkers = []; // Tableau pour stocker les épingles des villes
+  let hotelMarkers = []; // Tableau pour stocker les épingles des hôtels proches
 
   // Charger les villes depuis un fichier PHP (qui renvoie des données JSON)
   fetch('get_villes.php')
           .then(response => response.json())
           .then(data => {
             data.forEach(ville => {
-              new maplibregl.Marker({ element: createCustomMarker(villeIcon) })
+              const marker = new maplibregl.Marker({ element: createCustomMarker(villeIcon) })  // Utilise 📍 pour les villes
                       .setLngLat([ville.longitude, ville.latitude])
                       .setPopup(new maplibregl.Popup().setHTML(`<b>${ville.nom}</b><br>${ville.description}`))
                       .addTo(map);
+
+              // Ajouter l'épingle de la ville au tableau
+              cityMarkers.push(marker);
+
+              // Ajouter un événement sur le clic de la ville pour afficher les hôtels proches
+              marker.getElement().addEventListener('click', () => {
+                fetchHotels(ville.id);
+              });
             });
           });
 
-  // Charger les hôtels
-  fetch('get_hotels.php')
-          .then(response => response.json())
-          .then(data => {
-            data.forEach(hotel => {
-              new maplibregl.Marker({ element: createCustomMarker(hotelIcon) })
-                      .setLngLat([hotel.longitude, hotel.latitude])
-                      .setPopup(new maplibregl.Popup().setHTML(`<b>${hotel.nom}</b><br>${hotel.description}`))
-                      .addTo(map);
+  // Fonction pour récupérer et afficher les hôtels proches d'une ville
+  function fetchHotels(cityId) {
+    fetch(`get_hotels.php?city_id=${cityId}`)
+            .then(response => response.json())
+            .then(data => {
+              // Ajouter les hôtels proches à la carte
+              data.forEach(hotel => {
+                const hotelMarker = new maplibregl.Marker({ element: createCustomMarker(hotelProcheIcon) })  // Utilise 📌 pour les hôtels
+                        .setLngLat([hotel.longitude, hotel.latitude])
+                        .setPopup(new maplibregl.Popup().setHTML(`<b>${hotel.nom}</b><br>Distance: ${hotel.distance.toFixed(2)} km`))
+                        .addTo(map);
+
+                // Ajouter l'épingle de l'hôtel au tableau des hôtels
+                hotelMarkers.push(hotelMarker);
+              });
             });
-          });
+  }
 
   // Fonction pour créer un marqueur personnalisé
-  function createCustomMarker(iconURL) {
+  function createCustomMarker(icon) {
     let marker = document.createElement('div');
     marker.style.width = '24px';  // Taille de l'emoji
     marker.style.height = '24px';  // Taille de l'emoji
@@ -87,13 +103,12 @@
     marker.style.background = 'transparent';  // Pas de fond
     marker.style.border = 'none';  // Pas de bordure
     marker.style.boxShadow = 'none';  // Pas d'ombre
-    marker.innerHTML = '📍';  // Emoji 📍 pour la position
+    marker.innerHTML = icon;  // Emoji variable pour la position (📍 ou 📌)
     return marker;
   }
+
 
 </script>
 
 </body>
 </html>
-
-
