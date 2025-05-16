@@ -175,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1 class="text-xl font-bold">Voyage Japon</h1>
     <ul class="flex gap-6">
         <li><a href="#" class="hover:text-pink-200">Accueil</a></li>
-        <li><a href="villes.html" class="hover:text-pink-200">Villes</a></li>
+        <li><a href="activites.php" class="hover:text-pink-200">Activités</a></li>
         <li><a href="hotels.php" class="hover:text-pink-200">Hôtels</a></li>
         <li><a href="reservation.php" class="hover:text-pink-200">Réservation</a></li>
         <li><button class="hover:text-pink-200" onclick="toggleMap(event)">Carte</button></li>
@@ -250,6 +250,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         document.getElementById("auth-modal").classList.toggle("hidden");
     }
 
+</script>
+<script>
+    document.getElementById("toggleForm").addEventListener("click", function () {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        const formTitle = document.getElementById("formTitle");
+        const switchContainer = document.getElementById("switchContainer");
+
+        if (loginForm.classList.contains("hidden")) {
+            // On revient au formulaire de connexion
+            loginForm.classList.remove("hidden");
+            registerForm.classList.add("hidden");
+            formTitle.textContent = "Connexion";
+            switchContainer.innerHTML = `Pas encore inscrit ? <span id="toggleForm" class="switch-form">Créer un compte</span>`;
+        } else {
+            // On passe au formulaire d'inscription
+            loginForm.classList.add("hidden");
+            registerForm.classList.remove("hidden");
+            formTitle.textContent = "Inscription";
+            switchContainer.innerHTML = `Déjà inscrit ? <span id="toggleForm" class="switch-form">Se connecter</span>`;
+        }
+
+        // Réattacher l’événement après remplacement HTML
+        document.getElementById("toggleForm").addEventListener("click", arguments.callee);
+    });
 </script>
 
 </body>

@@ -1,17 +1,11 @@
 <?php
-// Démarrer la session
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['id'])) {
-    die('Erreur : Utilisateur non connecté.');
-}
-
-// Récupérer l'ID de l'utilisateur connecté
-$utilisateurId = $_SESSION['id'];
-
-// Connexion à la base de données
+// Connexion BDD
 require 'config.php';
+
 try {
     $pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'] . ";charset=utf8", $_ENV['DB_USER'], $_ENV['DB_PASS']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -19,26 +13,57 @@ try {
     die('Erreur de connexion : ' . $e->getMessage());
 }
 
-// Récupérer les données du formulaire
-$cityId = $_POST['city'];
-$hotelId = $_POST['hotel'];
-$checkinDate = $_POST['checkin'];
-$checkoutDate = $_POST['checkout'];
-$guests = $_POST['guests'];
-
-// Validation des dates
-if (strtotime($checkinDate) >= strtotime($checkoutDate)) {
-    die('Erreur : La date de départ doit être après la date d\'arrivée.');
+// Vérification des données du formulaire
+if (
+    !isset($_POST['hotel'], $_POST['chambre'], $_POST['checkin'], $_POST['checkout'], $_POST['guests'])
+) {
+    header('Location: reservation.php?error=Tous les champs sont requis.');
+    exit;
 }
 
-// Insertion de la réservation dans la base de données
-try {
-    // Requête d'insertion dans la table des réservations
-    $stmt = $pdo->prepare("INSERT INTO reservations (utilisateur_id, city_id, hotel_id, checkin_date, checkout_date, guests) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$utilisateurId, $cityId, $hotelId, $checkinDate, $checkoutDate, $guests]);
+$hotelId = intval($_POST['hotel']);
+$chambreId = intval($_POST['chambre']);
+$checkin = $_POST['checkin'];
+$checkout = $_POST['checkout'];
+$guests = intval($_POST['guests']);
 
-    echo "Réservation effectuée avec succès !";
-} catch (PDOException $e) {
-    die('Erreur lors de l\'insertion : ' . $e->getMessage());
+
+
+// Vérification de la disponibilité de la chambre
+$sql = "
+    SELECT COUNT(*) FROM reservations
+    WHERE chambre_id = :chambre_id
+    AND NOT (
+        :checkout <= date_debut OR
+        :checkin >= date_fin
+    )
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([
+    'chambre_id' => $chambreId,
+    'checkin' => $checkin,
+    'checkout' => $checkout
+]);
+$nbConflits = $stmt->fetchColumn();
+
+if ($nbConflits > 0) {
+    header('Location: reservation.php?error=Cette chambre est déjà réservée pour ces dates.');
+    exit;
 }
+
+// Insérer la réservation dans la table reservations
+$stmt = $pdo->prepare("
+    INSERT INTO reservations (chambre_id, date_debut, date_fin, nb_personnes)
+    VALUES (:chambre_id, :date_debut, :date_fin, :nb_personnes)
+");
+
+$stmt->execute([
+    'chambre_id' => $chambreId,
+    'date_debut' => $checkin,
+    'date_fin' => $checkout,
+    'nb_personnes' => $guests
+]);
+
+header('Location: reservation.php?success=Réservation effectuée avec succès.');
+exit;
 ?>

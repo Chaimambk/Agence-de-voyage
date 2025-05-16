@@ -33,7 +33,7 @@ $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h1 class="text-xl font-bold">Voyage Japon</h1>
     <ul class="flex gap-6">
         <li><a href="interface.html" class="hover:text-pink-200">Accueil</a></li>
-        <li><a href="villes.html" class="hover:text-pink-200">Villes</a></li>
+        <li><a href="activites.php" class="hover:text-pink-200">Activités</a></li>
         <li><a href="hotels.php" class="hover:text-pink-200">Hôtels</a></li>
         <li><a href="reservation.php" class="hover:text-pink-200">Réservation</a></li>
         <li><button class="hover:text-pink-200" onclick="toggleMap(event)">Carte</button></li>

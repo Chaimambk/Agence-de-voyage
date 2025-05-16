@@ -33,17 +33,48 @@ INSERT INTO hotels (nom, ville_id, description, image, adresse, latitude, longit
                                                                                          ('ANA Crowne Plaza Hiroshima', 4, 'Un hôtel élégant en plein cœur de la ville.', 'ana_hiroshima.jpg', '7-20 Nakamachi, Hiroshima', 34.3922, 132.4562),
                                                                                          ('Sapporo Grand Hotel', 5, 'Le plus prestigieux hôtel de Sapporo.', 'grand_sapporo.jpg', '4-chome Kita, Sapporo', 43.0642, 141.3469),
                                                                                          ('Rihga Royal Hotel Fukuoka', 6, 'Hôtel chic avec une belle vue sur la ville.', 'rihga_fukuoka.jpg', '2-14-2 Hakata Ekimae, Fukuoka', 33.5896, 130.4018);
+
 INSERT INTO chambres (hotel_id, nom, capacite, type, prix_par_nuit, disponible) VALUES
-                                                                                    (1, 'Suite Royale', 2, 'adulte', 800.00, TRUE),
-                                                                                    (1, 'Chambre Deluxe', 2, 'adulte', 300.00, TRUE),
-                                                                                    (2, 'Suite Shinjuku', 3, 'adulte', 600.00, TRUE),
-                                                                                    (2, 'Chambre standard', 2, 'adulte', 150.00, TRUE),
-                                                                                    (3, 'Suite Kyoto', 3, 'adulte', 500.00, TRUE),
-                                                                                    (4, 'Chambre traditionnelle', 2, 'adulte', 350.00, TRUE),
-                                                                                    (5, 'Chambre Skyview', 2, 'adulte', 400.00, TRUE),
-                                                                                    (6, 'Suite Osaka Lux', 4, 'adulte', 700.00, TRUE),
-                                                                                    (7, 'Chambre Hiroshima Comfort', 2, 'adulte', 250.00, TRUE),
-                                                                                    (8, 'Suite Hiroshima Vue Mer', 2, 'adulte', 500.00, TRUE);
+-- Hôtel 1 : Tokyo Otani
+(1, 'Chambre Simple', 1, 'adulte', 120.00, TRUE),
+(1, 'Chambre Famille', 4, 'famille', 400.00, TRUE),
+-- Hôtel 2 : Hyatt Tokyo
+(2, 'Chambre Premium', 2, 'adulte', 250.00, TRUE),
+(2, 'Chambre Famille', 4, 'famille', 450.00, TRUE),
+-- Hôtel 3 : Ritz Kyoto
+(3, 'Chambre Jardin', 2, 'adulte', 350.00, TRUE),
+(3, 'Chambre Junior', 2, 'adulte', 200.00, TRUE),
+-- Hôtel 4 : Four Seasons Kyoto
+(4, 'Chambre Spa', 2, 'adulte', 500.00, TRUE),
+(4, 'Chambre Tatami', 3, 'famille', 450.00, TRUE),
+-- Hôtel 5 : Marriott Osaka
+(5, 'Chambre Umeda', 2, 'adulte', 300.00, TRUE),
+(5, 'Suite Familiale', 5, 'famille', 600.00, TRUE),
+-- Hôtel 6 : Hilton Osaka
+(6, 'Chambre Classique', 2, 'adulte', 220.00, TRUE),
+(6, 'Suite Famille', 4, 'famille', 500.00, TRUE),
+-- Hôtel 7 : Sheraton Hiroshima
+(7, 'Chambre Zen', 1, 'adulte', 180.00, TRUE),
+(7, 'Chambre Famille Vue Parc', 4, 'famille', 400.00, TRUE),
+-- Hôtel 8 : ANA Hiroshima
+(8, 'Chambre Jardin', 2, 'adulte', 260.00, TRUE),
+(8, 'Suite Familiale', 5, 'famille', 550.00, TRUE),
+-- Hôtel 9 : Sapporo Grand Hotel
+(9, 'Chambre Neige', 2, 'adulte', 280.00, TRUE),
+(9, 'Suite Grand Nord', 3, 'famille', 500.00, TRUE),
+-- Hôtel 10 : Rihga Fukuoka
+(10, 'Chambre Hakata', 2, 'adulte', 230.00, TRUE),
+(10, 'Suite Vue Port', 3, 'adulte', 450.00, TRUE),
+(10, 'Chambre Enfants', 2, 'enfant', 120.00, TRUE),
+-- Extra pour variation de disponibilité
+(2, 'Chambre temporairement non dispo', 2, 'adulte', 180.00, FALSE),
+(5, 'Suite Deluxe Occupée', 2, 'adulte', 600.00, FALSE),
+(9, 'Chambre Économique', 1, 'adulte', 100.00, TRUE),
+(10, 'Chambre Business', 1, 'adulte', 160.00, TRUE);
+
+
+
+
 INSERT INTO activites (ville_id, nom, description, prix, image) VALUES
                                                                     (1, 'Visite de la Tour de Tokyo', 'Vue panoramique incroyable.', 20.00, 'tokyo_tower.jpg'),
                                                                     (1, 'Excursion à Akihabara', 'Découverte du quartier geek.', 15.00, 'akihabara.jpg'),
