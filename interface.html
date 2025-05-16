@@ -53,7 +53,7 @@
 </header>
 
 <!-- Destinations Populaires -->
-<section class="p-10">
+<section class="p-10 bg-white text-black">
   <h2 class="text-3xl mb-6 text-center">🌏 Nos Destinations Populaires</h2>
 
   <div class="w-full flex justify-center">
@@ -61,18 +61,18 @@
       <div class="swiper mySwiper h-full">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <a href="reservation-tokyo.html">
-              <img src="images/tokyo1.jpg" alt="Tokyo 1" class="w-full h-full object-cover" />
+            <a href="#" onclick="focusMapOnCity('Tokyo')">
+              <img src="images/tokyo1.jpg" alt="Tokyo" class="w-full h-full object-cover" />
             </a>
           </div>
           <div class="swiper-slide">
-            <a href="reservation-tokyo.html">
-              <img src="images/tokyo2.jpg" alt="Tokyo 2" class="w-full h-full object-cover" />
+            <a href="#" onclick="focusMapOnCity('Osaka')">
+              <img src="images/osaka.jpg" alt="Osaka" class="w-full h-full object-cover" />
             </a>
           </div>
           <div class="swiper-slide">
-            <a href="reservation-tokyo.html">
-              <img src="images/tokyo3.jpg" alt="Tokyo 3" class="w-full h-full object-cover" />
+            <a href="#" onclick="focusMapOnCity('Nagoya')">
+              <img src="images/nagoya.jpg" alt="Nagoya" class="w-full h-full object-cover" />
             </a>
           </div>
         </div>
@@ -125,6 +125,39 @@
       crossFade: true,
     },
   });
+
+  // Coordonnées des villes
+  const cityCoordinates = {
+    Tokyo: { lat: 35.6895, lng: 139.6917 },
+    Kyoto: { lat: 35.0116, lng: 135.7681 },
+    Osaka: { lat: 34.6937, lng: 135.5023 },
+    Hiroshima: { lat: 34.3853, lng: 132.4553 },
+    Sapporo: { lat: 43.0621, lng: 141.3544 },
+    Fukuoka: { lat: 33.5904, lng: 130.4017 },
+    Nagoya: { lat: 35.1815, lng: 136.9066 },
+  };
+
+  // Fonction pour afficher la carte et centrer sur une ville
+  function focusMapOnCity(city) {
+    const key = Object.keys(cityCoordinates).find(
+            c => c.toLowerCase() === city.toLowerCase()
+    );
+    if (!key) {
+      console.warn(`Ville "${city}" non trouvée.`);
+      return;
+    }
+    const coords = cityCoordinates[key];
+    toggleMap({ preventDefault: () => {} });
+    const iframe = document.querySelector('#map-container iframe');
+    if (iframe && iframe.contentWindow.focusOnCoords) {
+      iframe.contentWindow.focusOnCoords(coords.lat, coords.lng);
+    } else {
+      console.warn("La fonction focusOnCoords n'est pas encore chargée dans l'iframe.");
+    }
+  }
+
+
+
 </script>
 
 </body>

@@ -107,6 +107,10 @@
     return marker;
   }
 
+  function focusOnCoords(lat, lng) {
+    map.flyTo({ center: [lng, lat], zoom: 13 });
+  }
+  window.focusOnCoords = focusOnCoords;
 
 </script>
 
