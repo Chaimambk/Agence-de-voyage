@@ -174,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-50 p-4 flex justify-between items-center z-50">
     <h1 class="text-xl font-bold">Voyage Japon</h1>
     <ul class="flex gap-6">
-        <li><a href="#" class="hover:text-pink-200">Accueil</a></li>
+        <li><a href="interface.html" class="hover:text-pink-200">Accueil</a></li>
         <li><a href="activites.php" class="hover:text-pink-200">Activités</a></li>
         <li><a href="hotels.php" class="hover:text-pink-200">Hôtels</a></li>
         <li><a href="reservation.php" class="hover:text-pink-200">Réservation</a></li>
